@@ -1,28 +1,28 @@
-const products = ['product a', 'product b', 'product c', 'product d', 'product e'];
-
+const products = ["product A", "product B", "Product C"];
 // for
-console.log('For');
 for (let i = 0; i < products.length; i++) {
-    console.log(products[i]);
+    // console.log(products[i]);
+}
+// for...in
+for (let i in products) {
+    // console.log(products[i]);
+}
+// for...of
+for (let item of products) {
+    // console.log(item);
 }
 
-// for in
-console.log('For in');
-for (const index in products) {
-    console.log(products[index]);
-}
+// forEach
+products.forEach(function (item, i) {
+    console.log(`${item} có index là : ${i}`);
+});
 
-// for of
-console.log('For of');
-for (const item of products) {
-    console.log(item);
-}
-
-//forEach
-console.log('forEach');
-products.forEach(function (item,index) {
-    console.log(`${item} có index la ${index}`);
-})
+const productList = [
+    { id: 1, name: "Product A", price: 200 }, // item
+    { id: 2, name: "Product B", price: 300 }, // item
+    { id: 3, name: "Product C", price: 400 }, // item
+];
+const productListElement = document.querySelector("#productList");
 
 // Ví dụ show product sử dụng forEach
 // const showProducts = () => {
@@ -38,8 +38,18 @@ products.forEach(function (item,index) {
 const newProductList = productList.map((item) => {
     return `${item.name} + ahihi`;
 });
-
 // ví dụ show product sử dụng map
 const showProducts = () => {
     productListElement.innerHTML = productList.map((item) => `<div>${item.name}</div>`).join("");
 };
+showProducts();
+
+// filter
+const newFilterProducts = productList.filter((item) => item.id != 1);
+
+// find
+const findItem = productList.find((item) => item.id == 2);
+const newItem = `<div>${findItem.name}</div> <div>${findItem.price}</div>`;
+document.querySelector("#productDetail").innerHTML = newItem;
+
+find;

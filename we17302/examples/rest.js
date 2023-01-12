@@ -1,8 +1,9 @@
-function total(...number) {
+function total(...numbers) {
     let result = 0;
-    for (let i = 0; i < number.length; i++) {
-        result += number[i];
+    for (let i = 0; i < numbers.length; i++) {
+        result += numbers[i];
     }
-    console.log('result',result);
+    console.log("result", result);
+    // return x + y + z + a + b + c;
 }
-total(2,9,23,11,3,24);
+total(1, 2, 3, 4, 5, 6);
