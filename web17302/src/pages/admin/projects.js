@@ -1,16 +1,26 @@
-import { projects } from "../../data";
-import { useEffect, useState } from "../../lib";
+// import { projects } from "../../data";
+import { useEffect, useState } from "@/lib";
 
 const AdminProjectsPage = () => {
     // projects  = 3
-    const [data, setData] = useState(projects);
-
+    const [data, setData] = useState([]);
+    
+    useEffect(() => {
+        fetch("https://reqres.in/api/users")
+        .then((response) => response.json())
+        .then(({ data }) => setData(data))
+        .catch((error)=> console.log(error))
+        // const projects = JSON.parse(localStorage.getItem("projects")) || [];
+        // setData(projects);
+    }, []);
     useEffect(() => {
         const btns = document.querySelectorAll(".btn-remove");
         for (let btn of btns) {
             btn.addEventListener("click", function () {
                 const id = this.dataset.id;
-                setData(data.filter((project) => project.id != id));
+                const newProjects = data.filter((project) => project.id != id);
+                localStorage.setItem("projects", JSON.stringify(newProjects));
+                setData(newProjects);
             });
         }
     });

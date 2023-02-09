@@ -1,7 +1,8 @@
-import { projects } from "../../data";
-import { router, useEffect } from "../../lib";
+// import { projects } from "../../data";
+import { router, useEffect } from "@/lib";
 
 const AdminProjectAddPage = () => {
+    const projects = JSON.parse(localStorage.getItem("projects")) || [];
     useEffect( () => {
         const form = document.querySelector("#form-add");
         const projectName = document.querySelector("#project-name");
@@ -17,7 +18,7 @@ const AdminProjectAddPage = () => {
             };
 
             projects.push(project);
-
+            localStorage.setItem("projects", JSON.stringify(projects));
             router.navigate("/admin/projects")
         });
     });
