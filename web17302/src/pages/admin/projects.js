@@ -1,26 +1,36 @@
-// import { projects } from "../../data";
+import { deleteProject, getProjects } from "@/api/project";
 import { useEffect, useState } from "@/lib";
+import axios from "axios";
 
 const AdminProjectsPage = () => {
     // projects  = 3
-    const [data, setData] = useState([]);
-    
+    const [projects, setProjects] = useState([]);
+
     useEffect(() => {
-        fetch("https://reqres.in/api/users")
-        .then((response) => response.json())
-        .then(({ data }) => setData(data))
-        .catch((error)=> console.log(error))
-        // const projects = JSON.parse(localStorage.getItem("projects")) || [];
-        // setData(projects);
+        (async () => {
+            try {
+                setProjects(await getProjects());
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+
+        // getProjects()
+        //     .then(({ data }) => {
+        //         setProjects(data);
+        //     })
+        //     .catch((error) => console.log(error));
     }, []);
     useEffect(() => {
         const btns = document.querySelectorAll(".btn-remove");
         for (let btn of btns) {
             btn.addEventListener("click", function () {
                 const id = this.dataset.id;
-                const newProjects = data.filter((project) => project.id != id);
-                localStorage.setItem("projects", JSON.stringify(newProjects));
-                setData(newProjects);
+                // xóa trên server
+                deleteProject(id).then(() => {
+                    const newsProject = projects.filter((project) => project.id != id);
+                    setProjects(newsProject);
+                });
             });
         }
     });
@@ -36,7 +46,7 @@ const AdminProjectsPage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        ${data
+                        ${projects
                             .map((project, index) => {
                                 return `
                                 <tr>
@@ -58,3 +68,17 @@ const AdminProjectsPage = () => {
 };
 
 export default AdminProjectsPage;
+
+// Bước 1: npm i -g json-server
+// Bước 2: truy cập folder root
+// json-server --watch db.json
+
+//disabled system
+// angular.io/guide/setup-local
+// copy : Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+
+// GET /projects -> list
+// GET /projects/:id -> single
+// POST /projects -> add
+// PUT /projects/:id + body -> update
+// DELETE /projects/:id -> delete
